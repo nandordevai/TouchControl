@@ -5,11 +5,6 @@ from MPD218MainController import MPD218MainController
 from MPD218TrackController import MPD218TrackController
 from MPD218ClipController import MPD218ClipController
 
-"""
-based on http://motscousus.com/stuff/2007-09_AKAI_MPD16_Ableton_Live_Scripts/
-
-"""
-
 class MPD218:
 	__filter_funcs__ = ["update_display", "exec_commands", "log", "song"]
 	__module__ = __name__
