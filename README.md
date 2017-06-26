@@ -2,6 +2,8 @@
 
 Based on [Selected Track Control for Ableton Live](http://stc.wiffbi.com/)
 
+Note: this is currently a work in progress.
+
 ## Features
 
 - works without configuration
@@ -11,47 +13,25 @@ Based on [Selected Track Control for Ableton Live](http://stc.wiffbi.com/)
 - easy to use and learn
 - includes presets, PDF document of control mappings for both modes, printable overlays for the MPD218
 
-## Pad controls
+## Details
 
-Global:
-- play
-- stop
-- overdub
-- metronome
-- session automation record
+This Ableton Live remote script provides two different mappings for the Akai MPD218 MIDI controller. The 'studio mode' can be used for navigating and controlling tracks, devices and for global functions (transport controls, undo/redo, etc.) The 'performance mode' is a simpler mapping for using the controller in a live context.
 
-Track:
-- next
-- previous
-- mute
-- solo
-- arm
+These mappings are not intended to be an easily customizable, general solution. If you need that, I suggest using [Selected Track Control](http://stc.wiffbi.com/). This is a simple, instantly usable script for producers who don’t want to edit Python scripts.
 
-Clip:
-- duplicate
-- delete
+## Installation and usage
 
-Device:
-- select instrument
-- device lock
+Load the preset files (MPD218 STC Studio.mpd218 and MPD218 STC Performance.mpd218) to your MPD218 controller.
 
-## Encoder controls
+Copy the folder to Ableton Live’s MIDI remote scripts folder. (On macOS it is /Applications/Ableton Live 9 Standard.app/Contents/App-Resources/MIDI Remote Scripts.) Start Ableton Live, open preferences and go to "MIDI Sync" panel. Select MPD218 as control surface and configure the MIDI ports accordingly.
 
-(Macro controls grouped by position, not order.)
+The mappings use MIDI channel 1. If you want to use your controller in the default mode (eg. for Drum Racks) then create a preset with another channel.
 
-Bank A:
-- volume
-- pand
-- send A-D
+## Feedback
 
-Bank B:
-- macro 1-2
-- macro 5-6
-- scroll tracks
-- scroll scenes
+Please send any feedback to mail@devainandor.com. All comments and ideas are welcome, however I cannot guarantee that I can help you with installation and usage problems. Bugs will be fixed as time permits. New features may be added.
 
-Bank C:
-- macro 3-4
-- macro 7-8
-- scrub
-- record quantization
+## TODO
+
+- [ ] increase sensitivity for track/scene scroll
+- [ ] use toggle mode for mute/solo/etc. pads
