@@ -2,7 +2,7 @@
 
 Based on [Selected Track Control for Ableton Live](http://stc.wiffbi.com/)
 
-## Features
+## Features
 
 - works without configuration
 - studio and performance modes
@@ -35,7 +35,7 @@ Device:
 - select instrument
 - device lock
 
-## Encoder controls
+## Encoder controls
 
 (Macro controls grouped by position, not order.)
 
