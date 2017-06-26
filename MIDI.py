@@ -9,7 +9,7 @@ CC_STATUS = 0xb0
 NOTEON_STATUS = 0x90
 
 ABSOLUTE = Live.MidiMap.MapMode.absolute
-RELATIVE_TWO_COMPLEMENT = Live.MidiMap.MapMode.relative_two_complement
+RELATIVE_TWO_COMPLEMENT = Live.MidiMap.MapMode.relative_two_compliment
 
 
 class MIDIMessage:
