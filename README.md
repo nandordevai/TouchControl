@@ -23,7 +23,7 @@ These mappings are not intended to be an easily customizable, general solution. 
 
 Load the preset files (MPD218 STC Studio.mpd218 and MPD218 STC Performance.mpd218) to your MPD218 controller.
 
-Copy the folder to Ableton Live’s MIDI remote scripts folder. (On macOS it is /Applications/Ableton Live 9 Standard.app/Contents/App-Resources/MIDI Remote Scripts.) Start Ableton Live, open preferences and go to "MIDI Sync" panel. Select MPD218 as control surface and configure the MIDI ports accordingly.
+Copy the folder to Ableton Live’s MIDI remote scripts folder. (On macOS it is /Applications/Ableton Live 9 Standard.app/Contents/App-Resources/MIDI Remote Scripts.) Start Ableton Live, open preferences and go to "MIDI Sync" panel. Select 'MPD218 TotalControl' as control surface and configure the MIDI ports accordingly.
 
 The mappings use MIDI channel 1. If you want to use your controller in the default mode (eg. for Drum Racks) then create a preset with another channel.
 

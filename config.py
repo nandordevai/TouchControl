@@ -1,5 +1,6 @@
-from MIDI import Note
+from MIDI import Note, CC
 
-midi_mapping = {
-    "play_pause": Note(1)
+mappings = {
+    "play_pause": Note(21),
+    "scrub_by": CC(90),
 }
