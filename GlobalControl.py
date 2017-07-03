@@ -16,24 +16,24 @@ class GlobalControl(Control):
             ("metronome", self.toggle_metronome),
             ("undo", self.undo),
             ("redo", self.redo),
-            ("session_automation_rec", self.toggle_session_automation_record)
+            ("session_automation_rec", self.toggle_session_automation_record),
 
             # Session
             ("prev_track", lambda value, mode, status: self.scroll_tracks(-1)),
             ("next_track", lambda value, mode, status: self.scroll_tracks(1)),
 
             # Device
-            # "select_instrument"
-            # "toggle_lock"
+            ("select_instrument", self.select_instrument),
+            ("toggle_lock", self.toggle_lock),
 
             # Clip
-            # "delete_clip"
-            # "duplicate_clip"
+            ("delete_clip", self.delete_clip),
+            ("duplicate_clip", self.duplicate_clip),
 
             # Track
-            # "arm"
-            # "solo"
-            # "mute"
+            ("arm", self.toggle_arm),
+            ("solo", self.toggle_solo),
+            ("mute", self.toggle_mute),
         )
 
     def scrub_by(self, value, mode, status):
@@ -77,3 +77,34 @@ class GlobalControl(Control):
         current_index = tracks.index(self.song.view.selected_track)
         new_index = max(0, min(current_index + delta, len(tracks) - 1))
         return tracks[new_index]
+
+    def select_instrument(self, value, mode, status):
+        self.song.view.selected_track.view.select_instrument()
+
+    def toggle_lock(self, value, mode, status):
+        self.c_instance.toggle_lock()
+
+    def delete_clip(self, value, mode, status):
+        slot = self.song.view.highlighted_clip_slot
+        if slot is not None and slot.has_clip:
+            slot.delete_clip()
+
+    def duplicate_clip_slot(self, value, mode, status):
+        slot = self.song.view.highlighted_clip_slot
+        if slot.has_clip:
+            track = self.song.view.selected_track
+            index = track.clip_slots.index(slot)
+            next = track.duplicate_clip_slot(index)
+            self.song.view.highlighted_clip_slot = track.clip_slots[next]
+
+    @ignore_cc_zero
+    def toggle_arm(self, value, mode, status):
+        self.song.view.selected_track.arm = not self.song.view.selected_track.arm
+
+    @ignore_cc_zero
+    def toggle_mute(self, value, mode, status):
+        self.song.view.selected_track.mute = not self.song.view.selected_track.mute
+
+    @ignore_cc_zero
+    def toggle_solo(self, value, mode, status):
+        self.song.view.selected_track.solo = not self.song.view.selected_track.solo
