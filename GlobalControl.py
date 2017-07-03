@@ -11,15 +11,19 @@ class GlobalControl(Control):
         return (
             ("play_pause", self.play_pause),
             ("scrub_by", self.scrub_by),
+            ("stop", self.stop),
         )
 
     def scrub_by(self, value, mode, status):
         self.song.scrub_by(value)
 
+    @ignore_cc_zero
     def play_pause(self, value, mode, status):
-        if status == MIDI.CC_STATUS and not value:  # ignore 0 values from CC-pads
-            return
         if self.song.is_playing:
             self.song.stop_playing()
         else:
             self.song.continue_playing()
+
+    @ignore_cc_zero
+    def stop_playing(self, value, mode, status):
+        self.song.stop_playing()
