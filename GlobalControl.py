@@ -9,6 +9,9 @@ class GlobalControl(Control):
 
     def get_midi_bindings(self):
         return (
+            ("scrub_by", self.scrub_by),
+            # TODO:
+            # "record_quantization"
             ("play_pause", self.play_pause),
             ("scrub_by", self.scrub_by),
             ("stop", self.stop),
@@ -19,10 +22,20 @@ class GlobalControl(Control):
             ("session_automation_rec", self.toggle_session_automation_record),
 
             # Session
+            ("scroll_tracks", self.scroll_tracks),
+            ("scroll_scenes", self.scroll_scenes),
             ("prev_track", lambda value, mode, status: self.scroll_tracks(-1)),
             ("next_track", lambda value, mode, status: self.scroll_tracks(1)),
 
             # Device
+            ("macro_1", lambda value, mode, status: self.set_device_param(0, value)),
+            ("macro_2", lambda value, mode, status: self.set_device_param(1, value)),
+            ("macro_3", lambda value, mode, status: self.set_device_param(2, value)),
+            ("macro_4", lambda value, mode, status: self.set_device_param(3, value)),
+            ("macro_5", lambda value, mode, status: self.set_device_param(4, value)),
+            ("macro_6", lambda value, mode, status: self.set_device_param(5, value)),
+            ("macro_7", lambda value, mode, status: self.set_device_param(6, value)),
+            ("macro_8", lambda value, mode, status: self.set_device_param(7, value)),
             ("select_instrument", self.select_instrument),
             ("toggle_lock", self.toggle_lock),
 
@@ -31,6 +44,12 @@ class GlobalControl(Control):
             ("duplicate_clip", self.duplicate_clip),
 
             # Track
+            ("volume", self.set_volume),
+            ("pan", self.set_pan),
+            ("send_a", lambda value, mode, status: self.set_send(0, value)),
+            ("send_b", lambda value, mode, status: self.set_send(1, value)),
+            ("send_c", lambda value, mode, status: self.set_send(2, value)),
+            ("send_d", lambda value, mode, status: self.set_send(3, value)),
             ("arm", self.toggle_arm),
             ("solo", self.toggle_solo),
             ("mute", self.toggle_mute),
@@ -78,6 +97,17 @@ class GlobalControl(Control):
         new_index = max(0, min(current_index + delta, len(tracks) - 1))
         return tracks[new_index]
 
+    def scroll_scenes(self, value):
+        # TODO: check if sensitivity can be decreased
+        self.song.view.selected_scene = self.get_scene_by_delta(value)
+
+    def get_scene_by_delta(self, delta):
+        scene = self.song.view.selected_scene
+        scenes = self.song.scenes
+        current_index = scenes.index(scene)
+        new_index = max(0, min(current_index + delta, len(scenes) - 1))
+        return scenes[new_index]
+
     def select_instrument(self, value, mode, status):
         self.song.view.selected_track.view.select_instrument()
 
@@ -108,3 +138,36 @@ class GlobalControl(Control):
     @ignore_cc_zero
     def toggle_solo(self, value, mode, status):
         self.song.view.selected_track.solo = not self.song.view.selected_track.solo
+
+    def set_volume(self, value, mode, status):
+        current_value = self.song.view.selected_track.mixer_device.volume.value
+        self.song.view.selected_track.mixer_device.volume.value = max(
+            0.0,
+            min(1.0, current_value + (value / 200.0))
+        )
+
+    def set_pan(self, value, mode, status):
+        current_value = self.song.view.selected_track.mixer_device.panning.value
+        self.song.view.selected_track.mixer_device.panning.value = max(
+            -1.0,
+            min(1.0, current_value + (value / 100.0))
+        )
+
+    def set_send(self, i, value):
+        param = self.song.view.selected_track.mixer_device.sends[i]
+        if param:
+            param.value = max(0.0, min(1.0, param.value + (value / 100.0)))
+
+    def set_device_param(self, i, value):
+        device = self.song.view.selected_track.view.selected_device
+        if not device:
+            return
+
+        param = device.parameters[i]
+        if not param:
+            return
+
+        param.value = max(param.min, min(param.max, param.value + param_range * value / 127.0))
+
+    def scrub_by(self, value, mode, status):
+        self.song.scrub_by(value)
