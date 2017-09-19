@@ -153,6 +153,8 @@ class GlobalControl(Control):
         )
 
     def set_send(self, i, value):
+        if i >= len(self.song.view.selected_track.mixer_device.sends):
+            return
         param = self.song.view.selected_track.mixer_device.sends[i]
         if param:
             param.value = max(0.0, min(1.0, param.value + (value / 100.0)))
@@ -173,10 +175,11 @@ class GlobalControl(Control):
 
     @ignore_cc_zero
     def midi_recording_quantization(self, value, mode, status):
+        q_labels = ["None", "1/4", "1/8", "1/8T", "1/8", "1/8T", "1/16", "1/16T", "1/16", "1/16T", "1/32"]
         self.song.midi_recording_quantization = self._get_quantization(value, mode, status)
         self.show_message(
             "MIDI recording quantization: %s" %
-            self._midi_recording_quantization_labels[self.song.midi_recording_quantization]
+            q_labels[self.song.midi_recording_quantization]
         )
 
     def _get_quantization(self, value, mode, status):
@@ -190,5 +193,4 @@ class GlobalControl(Control):
         # 7: 1/16 + 1/16T
         # 8: 1/32
         next_index = range(9).index(self.song.midi_recording_quantization) + (value / abs(value))
-        real_index = min(max(0, next_index), 8)
-        return quantizations[real_index]
+        return min(max(0, next_index), 8)
