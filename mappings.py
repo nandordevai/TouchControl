@@ -20,7 +20,7 @@ mappings = {
     "macro_7": CC(14),
     "macro_8": CC(15),
     "scrub_by": CC(16),
-    "record_quantization": CC(17),
+    "midi_recording_quantization": CC(17),
 
     "stop": Note(0),
     "play_pause": Note(1),

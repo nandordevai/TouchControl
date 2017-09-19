@@ -1,5 +1,5 @@
 import MIDI
-from Control import Control
+from Control import Control, ignore_cc_zero
 
 
 class GlobalControl(Control):
@@ -10,7 +10,7 @@ class GlobalControl(Control):
     def get_midi_bindings(self):
         return (
             ("scrub_by", self.scrub_by),
-            ("record_quantization", self.record_quantization),
+            ("midi_recording_quantization", self.midi_recording_quantization),
             ("play_pause", self.play_pause),
             ("scrub_by", self.scrub_by),
             ("stop", self.stop),
@@ -65,7 +65,7 @@ class GlobalControl(Control):
             self.song.continue_playing()
 
     @ignore_cc_zero
-    def stop_playing(self, value, mode, status):
+    def stop(self, value, mode, status):
         self.song.stop_playing()
 
     @ignore_cc_zero
@@ -91,7 +91,7 @@ class GlobalControl(Control):
         self.song.view.selected_track = self.get_track_by_delta(value)
 
     def get_track_by_delta(self, delta):
-        tracks = self.song.tracks + self.song.return_tracks + [self.song.master_track]
+        tracks = self.song.tracks + self.song.return_tracks + (self.song.master_track,)
         current_index = tracks.index(self.song.view.selected_track)
         new_index = max(0, min(current_index + delta, len(tracks) - 1))
         return tracks[new_index]
@@ -118,7 +118,7 @@ class GlobalControl(Control):
         if slot is not None and slot.has_clip:
             slot.delete_clip()
 
-    def duplicate_clip_slot(self, value, mode, status):
+    def duplicate_clip(self, value, mode, status):
         slot = self.song.view.highlighted_clip_slot
         if slot.has_clip:
             track = self.song.view.selected_track

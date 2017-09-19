@@ -50,3 +50,15 @@ class MPD218:
                 self.callbacks[status][key].append(callback)
             else:
                 self.callbacks[status][key] = [callback, ]
+
+    def update_display(self):
+        pass
+
+    def refresh_state(self):
+        pass
+
+    def can_lock_to_devices(self):
+        return True
+
+    def connect_script_instances(self, instanciated_scripts):
+        pass

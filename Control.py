@@ -6,7 +6,7 @@ from mappings import mappings
 def ignore_cc_zero(func):
     def func_wrapper(*args):
         if not (args[3] == MIDI.CC_STATUS and not args[1]):
-            func(args)
+            func(*args)
 
     return func_wrapper
 
