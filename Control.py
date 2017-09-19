@@ -5,7 +5,7 @@ from mappings import mappings
 # ignore 0 values from CC pads
 def ignore_cc_zero(func):
     def func_wrapper(*args):
-        if !(args[3] == MIDI.CC_STATUS and not args[1]):
+        if not (args[3] == MIDI.CC_STATUS and not args[1]):
             func(args)
 
     return func_wrapper
