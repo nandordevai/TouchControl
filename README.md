@@ -35,3 +35,7 @@ Please send any feedback to mail@devainandor.com. All comments and ideas are wel
 
 - [ ] increase sensitivity for track/scene scroll
 - [ ] use toggle mode for mute/solo/etc. pads
+
+## _Framework documentation
+
+<http://julienbayle.net/AbletonLiveRemoteScripts_Docs/_Framework//_Framework-module.html>

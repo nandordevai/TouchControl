@@ -103,7 +103,7 @@ class GlobalControl(Control):
     def get_scene_by_delta(self, delta):
         scene = self.song.view.selected_scene
         scenes = self.song.scenes
-        current_index = scenes.index(scene)
+        current_index = list(scenes).index(scene)
         new_index = max(0, min(current_index + delta, len(scenes) - 1))
         return scenes[new_index]
 
