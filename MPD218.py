@@ -62,3 +62,9 @@ class MPD218:
 
     def connect_script_instances(self, instanciated_scripts):
         pass
+
+    def lock_to_device(self, *args):
+        pass
+
+    def unlock_from_device(self, *args):
+        pass

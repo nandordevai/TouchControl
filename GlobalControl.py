@@ -87,7 +87,7 @@ class GlobalControl(Control):
     def toggle_session_automation_record(self, value, mode, status):
         self.song.session_automation_record = not self.song.session_automation_record
 
-    def scroll_tracks(self, value, mode, status):
+    def scroll_tracks(self, value, *args):
         self.song.view.selected_track = self.get_track_by_delta(value)
 
     def get_track_by_delta(self, delta):
