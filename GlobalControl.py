@@ -27,14 +27,14 @@ class GlobalControl(Control):
             ("next_track", lambda value, mode, status: self.scroll_tracks(1)),
 
             # Device
-            ("macro_1", lambda value, mode, status: self.set_device_param(0, value)),
-            ("macro_2", lambda value, mode, status: self.set_device_param(1, value)),
-            ("macro_3", lambda value, mode, status: self.set_device_param(2, value)),
-            ("macro_4", lambda value, mode, status: self.set_device_param(3, value)),
-            ("macro_5", lambda value, mode, status: self.set_device_param(4, value)),
-            ("macro_6", lambda value, mode, status: self.set_device_param(5, value)),
-            ("macro_7", lambda value, mode, status: self.set_device_param(6, value)),
-            ("macro_8", lambda value, mode, status: self.set_device_param(7, value)),
+            ("macro_1", lambda value, mode, status: self.set_device_param(1, value)),
+            ("macro_2", lambda value, mode, status: self.set_device_param(2, value)),
+            ("macro_3", lambda value, mode, status: self.set_device_param(3, value)),
+            ("macro_4", lambda value, mode, status: self.set_device_param(4, value)),
+            ("macro_5", lambda value, mode, status: self.set_device_param(5, value)),
+            ("macro_6", lambda value, mode, status: self.set_device_param(6, value)),
+            ("macro_7", lambda value, mode, status: self.set_device_param(7, value)),
+            ("macro_8", lambda value, mode, status: self.set_device_param(8, value)),
             ("select_instrument", self.select_instrument),
             ("toggle_lock", self.toggle_lock),
 
@@ -87,7 +87,7 @@ class GlobalControl(Control):
     def toggle_session_automation_record(self, value, mode, status):
         self.song.session_automation_record = not self.song.session_automation_record
 
-    def scroll_tracks(self, value):
+    def scroll_tracks(self, value, mode, status):
         self.song.view.selected_track = self.get_track_by_delta(value)
 
     def get_track_by_delta(self, delta):
@@ -96,7 +96,7 @@ class GlobalControl(Control):
         new_index = max(0, min(current_index + delta, len(tracks) - 1))
         return tracks[new_index]
 
-    def scroll_scenes(self, value):
+    def scroll_scenes(self, value, *args):
         # TODO: check if sensitivity can be decreased
         self.song.view.selected_scene = self.get_scene_by_delta(value)
 
@@ -168,6 +168,7 @@ class GlobalControl(Control):
         if not param:
             return
 
+        param_range = param.max - param.min
         param.value = max(param.min, min(param.max, param.value + param_range * value / 127.0))
 
     def scrub_by(self, value, mode, status):
