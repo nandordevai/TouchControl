@@ -122,8 +122,7 @@ class GlobalControl(Control):
         slot = self.song.view.highlighted_clip_slot
         if slot.has_clip:
             track = self.song.view.selected_track
-            index = track.clip_slots.index(slot)
-            next = track.duplicate_clip_slot(index)
+            next = track.duplicate_clip_slot(list(track.clip_slots).index(slot))
             self.song.view.highlighted_clip_slot = track.clip_slots[next]
 
     @ignore_cc_zero
