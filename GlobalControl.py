@@ -1,3 +1,5 @@
+import math
+
 import MIDI
 from Control import Control, ignore_cc_zero
 
@@ -25,8 +27,8 @@ class GlobalControl(Control):
             # Session
             ("scroll_tracks", self.scroll_tracks),
             ("scroll_scenes", self.scroll_scenes),
-            ("prev_track", lambda value, mode, status: self.scroll_tracks(-1)),
-            ("next_track", lambda value, mode, status: self.scroll_tracks(1)),
+            ("prev_track", self.select_prev_track),
+            ("next_track", self.select_next_track),
 
             # Device
             ("macro_1", lambda value, mode, status: self.set_device_param(1, value)),
@@ -90,11 +92,20 @@ class GlobalControl(Control):
         self.song.session_automation_record = not self.song.session_automation_record
 
     def scroll_tracks(self, value, *args):
-        if self.track_buffer == 5:
+        # if the knob is turned to the other side than before, reset:
+        if math.copysign(1, self.track_buffer) != math.copysign(1, value):
+            self.track_buffer = 0
+        self.track_buffer += value
+        # if we reached the threshold, change track using the value (+/- 1) and reset
+        if abs(self.track_buffer) == 5:
             self.song.view.selected_track = self.get_track_by_delta(value)
             self.track_buffer = 0
-        else:
-            self.track_buffer += 1
+
+    def select_next_track(self, *args):
+        self.song.view.selected_track = self.get_track_by_delta(1)
+
+    def select_prev_track(self, *args):
+        self.song.view.selected_track = self.get_track_by_delta(-1)
 
     def get_track_by_delta(self, delta):
         tracks = self.song.tracks + self.song.return_tracks + (self.song.master_track,)

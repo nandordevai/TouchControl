@@ -11,7 +11,7 @@ Note: this is currently a work in progress.
     - studio mode maps as many controls as possible for effective work
     - performance mode is simple and safe
 - easy to use and learn
-- includes presets, PDF document of control mappings for both modes, printable overlays for the MPD218
+- includes presets, PDF document of control mappings for both modes
 
 ## Details
 
@@ -34,6 +34,7 @@ Please send any feedback to mail@devainandor.com. All comments and ideas are wel
 ## TODO
 
 - [x] increase sensitivity for track/scene scroll
+- [ ] printable overlays
 - [ ] ~~use toggle mode for mute/solo/etc. pads~~
 
 ## _Framework documentation
