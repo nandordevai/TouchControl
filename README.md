@@ -15,7 +15,7 @@ Note: this is currently a work in progress.
 
 ## Details
 
-This Ableton Live remote script provides two different mappings for the Akai MPD218 MIDI controller. The 'studio mode' can be used for navigating and controlling tracks, devices and for global functions (transport controls, undo/redo, etc.) The 'performance mode' is a simpler mapping for using the controller in a live context.
+This Ableton Live remote script provides two different mappings for the Akai MPD218 MIDI controller. The 'studio mode' can be used for navigating and controlling tracks, devices and for global functions (transport controls, undo/redo, etc.) The 'performance mode' is a simpler mapping for using the controller in a live context (it uses the same actions in all three controller/pad banks).
 
 These mappings are not intended to be an easily customizable, general solution. If you need that, I suggest using [Selected Track Control](http://stc.wiffbi.com/). This is a simple, instantly usable script for producers who don’t want to edit Python scripts.
 
@@ -34,7 +34,7 @@ Please send any feedback to mail@devainandor.com. All comments and ideas are wel
 ## TODO
 
 - [x] increase sensitivity for track/scene scroll
-- [ ] use toggle mode for mute/solo/etc. pads
+- [ ] ~~use toggle mode for mute/solo/etc. pads~~
 
 ## _Framework documentation
 
