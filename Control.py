@@ -37,6 +37,6 @@ class Control:
         return set()
 
     def show_message(self, msg):
-        """ display msg in Live's status bar """
+        """Display a message in Live's status bar"""
         assert isinstance(msg, (str, unicode))
         self.c_instance.show_message(msg)

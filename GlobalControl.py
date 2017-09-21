@@ -6,6 +6,8 @@ class GlobalControl(Control):
     def __init__(self, c_instance, selected_track_controller):
         Control.__init__(self, c_instance, selected_track_controller)
         self.show_message('Global controls initialized')
+        self.track_buffer = 0
+        self.scene_buffer = 0
 
     def get_midi_bindings(self):
         return (
@@ -88,7 +90,11 @@ class GlobalControl(Control):
         self.song.session_automation_record = not self.song.session_automation_record
 
     def scroll_tracks(self, value, *args):
-        self.song.view.selected_track = self.get_track_by_delta(value)
+        if self.track_buffer == 5:
+            self.song.view.selected_track = self.get_track_by_delta(value)
+            self.track_buffer = 0
+        else:
+            self.track_buffer += 1
 
     def get_track_by_delta(self, delta):
         tracks = self.song.tracks + self.song.return_tracks + (self.song.master_track,)
@@ -97,8 +103,11 @@ class GlobalControl(Control):
         return tracks[new_index]
 
     def scroll_scenes(self, value, *args):
-        # TODO: check if sensitivity can be decreased
-        self.song.view.selected_scene = self.get_scene_by_delta(value)
+        if self.scene_buffer == 5:
+            self.song.view.selected_scene = self.get_scene_by_delta(value)
+            self.scene_buffer = 0
+        else:
+            self.scene_buffer += 1
 
     def get_scene_by_delta(self, delta):
         scene = self.song.view.selected_scene

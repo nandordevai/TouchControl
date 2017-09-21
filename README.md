@@ -33,7 +33,7 @@ Please send any feedback to mail@devainandor.com. All comments and ideas are wel
 
 ## TODO
 
-- [ ] increase sensitivity for track/scene scroll
+- [x] increase sensitivity for track/scene scroll
 - [ ] use toggle mode for mute/solo/etc. pads
 
 ## _Framework documentation
