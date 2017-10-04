@@ -38,4 +38,5 @@ mappings = {
     "next_track": Note(13),
     "duplicate_clip": Note(14),
     "mute": Note(15),
+    "fire_next_scene": Note(16)
 }

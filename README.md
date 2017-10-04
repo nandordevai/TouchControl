@@ -34,6 +34,7 @@ Please send any feedback to mail@devainandor.com. All comments and ideas are wel
 ## TODO
 
 - [x] increase sensitivity for track/scene scroll
+- [ ] device lock
 - [ ] printable overlays
 - [ ] ~~use toggle mode for mute/solo/etc. pads~~
 

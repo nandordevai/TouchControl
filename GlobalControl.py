@@ -23,6 +23,7 @@ class GlobalControl(Control):
             ("undo", self.undo),
             ("redo", self.redo),
             ("session_automation_rec", self.toggle_session_automation_record),
+            ("fire_next_scene", self.fire_next_scene),
 
             # Session
             ("scroll_tracks", self.scroll_tracks),
@@ -214,3 +215,9 @@ class GlobalControl(Control):
         # 8: 1/32
         next_index = range(9).index(self.song.midi_recording_quantization) + (value / abs(value))
         return min(max(0, next_index), 8)
+
+    @ignore_cc_zero
+    def fire_next_scene(self, value, mode, status):
+        scene = self.get_scene_by_delta(1)
+        scene.fire()
+        self.song.view.selected_scene = scene
