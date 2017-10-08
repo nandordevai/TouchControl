@@ -2,7 +2,7 @@ import math
 
 import MIDI
 from Control import Control, ignore_cc_zero
-
+from mappings import mappings
 
 class GlobalControl(Control):
     def __init__(self, c_instance, selected_track_controller):
@@ -10,6 +10,7 @@ class GlobalControl(Control):
         self.show_message('Global controls initialized')
         self.track_buffer = 0
         self.scene_buffer = 0
+        self.song.view.add_selected_track_listener(self.on_track_selected)
 
     def get_midi_bindings(self):
         return (
@@ -227,3 +228,32 @@ class GlobalControl(Control):
         scene = self.get_scene_by_delta(1)
         scene.fire()
         self.song.view.selected_scene = scene
+
+    def on_track_selected(self):
+        # (note on: 144 | note off: 128, note, velocity)
+        if self.song.view.selected_track.arm:
+            msg = 144
+            vel = 1
+        else:
+            msg = 128
+            vel = 0
+        midi_bytes = (msg, mappings["arm"].key, vel)
+        self.c_instance.send_midi(midi_bytes)
+
+        if self.song.view.selected_track.mute:
+            msg = 144
+            vel = 1
+        else:
+            msg = 128
+            vel = 0
+        midi_bytes = (msg, mappings["mute"].key, vel)
+        self.c_instance.send_midi(midi_bytes)
+        if self.song.view.selected_track.solo:
+            msg = 144
+            vel = 1
+        else:
+            msg = 128
+            vel = 0
+        # (note on: 144 | note off: 128, note, velocity)
+        midi_bytes = (msg, mappings["solo"].key, vel)
+        self.c_instance.send_midi(midi_bytes)
