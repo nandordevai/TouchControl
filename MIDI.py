@@ -5,6 +5,7 @@ STATUS_MASK = 0xF0
 CHAN_MASK = 0x0F
 CC_STATUS = 0xb0
 NOTEON_STATUS = 0x90
+NOTEOFF_STATUS = 0x80
 
 ABSOLUTE = Live.MidiMap.MapMode.absolute  # 0 - 127
 RELATIVE_TWO_COMPLEMENT = Live.MidiMap.MapMode.relative_two_compliment  # 001 - 064 / 127 - 65
@@ -25,9 +26,14 @@ class MIDIMessage:
         self.channel = DEFAULT_CHANNEL
 
 
-class Note(MIDIMessage):
+class NoteOn(MIDIMessage):
     def __init__(self, note):
         MIDIMessage.__init__(self, note, status=NOTEON_STATUS)
+
+
+class NoteOff(MIDIMessage):
+    def __init__(self, note):
+        MIDIMessage.__init__(self, note, status=NOTEOFF_STATUS)
 
 
 class CC(MIDIMessage):

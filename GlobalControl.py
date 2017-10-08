@@ -18,11 +18,14 @@ class GlobalControl(Control):
             ("play_pause", self.play_pause),
             ("scrub_by", self.scrub_by),
             ("stop", self.stop),
-            ("overdub", self.toggle_overdub),
-            ("metronome", self.toggle_metronome),
+            ("overdub_on", self.toggle_overdub),
+            ("overdub_off", self.toggle_overdub),
+            ("metronome_on", self.toggle_metronome),
+            ("metronome_off", self.toggle_metronome),
             ("undo", self.undo),
             ("redo", self.redo),
-            ("session_automation_rec", self.toggle_session_automation_record),
+            ("session_automation_rec_on", self.toggle_session_automation_record),
+            ("session_automation_rec_off", self.toggle_session_automation_record),
             ("fire_next_scene", self.fire_next_scene),
 
             # Session
@@ -55,8 +58,11 @@ class GlobalControl(Control):
             ("send_c", lambda value, mode, status: self.set_send(2, value)),
             ("send_d", lambda value, mode, status: self.set_send(3, value)),
             ("arm", self.toggle_arm),
+            ("unarm", self.toggle_arm),
             ("solo", self.toggle_solo),
+            ("unsolo", self.toggle_solo),
             ("mute", self.toggle_mute),
+            ("unmute", self.toggle_mute),
         )
 
     def scrub_by(self, value, mode, status):
@@ -79,7 +85,7 @@ class GlobalControl(Control):
 
     @ignore_cc_zero
     def toggle_metronome(self, value, mode, status):
-        self.song.metronome = not self.song.metronome
+        self.song.metronome = bool(value)
 
     @ignore_cc_zero
     def undo(self, value, mode, status):
@@ -148,15 +154,15 @@ class GlobalControl(Control):
 
     @ignore_cc_zero
     def toggle_arm(self, value, mode, status):
-        self.song.view.selected_track.arm = not self.song.view.selected_track.arm
+        self.song.view.selected_track.arm = bool(value)
 
     @ignore_cc_zero
     def toggle_mute(self, value, mode, status):
-        self.song.view.selected_track.mute = not self.song.view.selected_track.mute
+        self.song.view.selected_track.mute = bool(value)
 
     @ignore_cc_zero
     def toggle_solo(self, value, mode, status):
-        self.song.view.selected_track.solo = not self.song.view.selected_track.solo
+        self.song.view.selected_track.solo = bool(value)
 
     def set_volume(self, value, mode, status):
         current_value = self.song.view.selected_track.mixer_device.volume.value

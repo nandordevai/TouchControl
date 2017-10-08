@@ -40,4 +40,6 @@ Please send any feedback to mail@devainandor.com. All comments and ideas are wel
 
 ## _Framework documentation
 
-<http://julienbayle.net/AbletonLiveRemoteScripts_Docs/_Framework//_Framework-module.html>
+<http://julienbayle.net/AbletonLiveRemoteScripts_Docs/_Framework/_Framework-module.html>
+
+[Live API Version 9.6.0](http://julienbayle.net/PythonLiveAPI_documentation/Live9.6.xml)

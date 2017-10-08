@@ -22,6 +22,9 @@ class MPD218:
         for note in self.callbacks.get(MIDI.NOTEON_STATUS, {}).keys():
             Live.MidiMap.forward_midi_note(script_handle, midi_map_handle, MIDI.DEFAULT_CHANNEL, note)
 
+        for note in self.callbacks.get(MIDI.NOTEOFF_STATUS, {}).keys():
+            Live.MidiMap.forward_midi_note(script_handle, midi_map_handle, MIDI.DEFAULT_CHANNEL, note)
+
         for cc in self.callbacks.get(MIDI.CC_STATUS, {}).keys():
             Live.MidiMap.forward_midi_cc(script_handle, midi_map_handle, MIDI.DEFAULT_CHANNEL, cc)
 

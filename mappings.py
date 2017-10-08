@@ -1,4 +1,4 @@
-from MIDI import Note, CC
+from MIDI import NoteOn, NoteOff, CC
 
 mappings = {
     "volume": CC(0),
@@ -22,21 +22,27 @@ mappings = {
     "scrub_by": CC(16),
     "midi_recording_quantization": CC(17),
 
-    "stop": Note(0),
-    "play_pause": Note(1),
-    "overdub": Note(2),
-    "metronome": Note(3),
-    "undo": Note(4),
-    "redo": Note(5),
-    "session_automation_rec": Note(6),
-    "arm": Note(7),
-    "select_instrument": Note(8),
-    "toggle_lock": Note(9),
-    "delete_clip": Note(10),
-    "solo": Note(11),
-    "prev_track": Note(12),
-    "next_track": Note(13),
-    "duplicate_clip": Note(14),
-    "mute": Note(15),
-    "fire_next_scene": Note(16)
+    "stop": NoteOn(0),
+    "play_pause": NoteOn(1),
+    "overdub_on": NoteOn(2),
+    "overdub_off": NoteOff(2),
+    "metronome_on": NoteOn(3),
+    "metronome_off": NoteOff(3),
+    "undo": NoteOn(4),
+    "redo": NoteOn(5),
+    "session_automation_rec_on": NoteOn(6),
+    "session_automation_rec_off": NoteOff(6),
+    "arm": NoteOn(7),
+    "unarm": NoteOff(7),
+    "select_instrument": NoteOn(8),
+    "toggle_lock": NoteOn(9),
+    "delete_clip": NoteOn(10),
+    "solo": NoteOn(11),
+    "unsolo": NoteOff(11),
+    "prev_track": NoteOn(12),
+    "next_track": NoteOn(13),
+    "duplicate_clip": NoteOn(14),
+    "mute": NoteOn(15),
+    "unmute": NoteOff(15),
+    "fire_next_scene": NoteOn(16)
 }
