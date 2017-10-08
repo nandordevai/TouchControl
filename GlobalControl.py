@@ -231,29 +231,21 @@ class GlobalControl(Control):
 
     def on_track_selected(self):
         # (note on: 144 | note off: 128, note, velocity)
-        if self.song.view.selected_track.arm:
-            msg = 144
-            vel = 1
-        else:
-            msg = 128
-            vel = 0
-        midi_bytes = (msg, mappings["arm"].key, vel)
-        self.c_instance.send_midi(midi_bytes)
 
-        if self.song.view.selected_track.mute:
-            msg = 144
-            vel = 1
-        else:
-            msg = 128
-            vel = 0
-        midi_bytes = (msg, mappings["mute"].key, vel)
-        self.c_instance.send_midi(midi_bytes)
-        if self.song.view.selected_track.solo:
-            msg = 144
-            vel = 1
-        else:
-            msg = 128
-            vel = 0
-        # (note on: 144 | note off: 128, note, velocity)
-        midi_bytes = (msg, mappings["solo"].key, vel)
-        self.c_instance.send_midi(midi_bytes)
+        def _build_midi_msg(status):
+            if status:
+                msg = 144
+                vel = 1
+            else:
+                msg = 128
+                vel = 0
+            return msg, vel
+
+        msg, vel = _build_midi_msg(self.song.view.selected_track.arm)
+        self.c_instance.send_midi((msg, mappings["arm"].key, vel))
+
+        msg, vel = _build_midi_msg(self.song.view.selected_track.mute)
+        self.c_instance.send_midi((msg, mappings["mute"].key, vel))
+
+        msg, vel = _build_midi_msg(self.song.view.selected_track.solo)
+        self.c_instance.send_midi((msg, mappings["solo"].key, vel))
