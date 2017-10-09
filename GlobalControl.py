@@ -16,7 +16,8 @@ class GlobalControl(Control):
         return (
             ("scrub_by", self.scrub_by),
             ("midi_recording_quantization", self.midi_recording_quantization),
-            ("play_pause", self.play_pause),
+            ("play", self.play),
+            ("pause", self.pause),
             ("scrub_by", self.scrub_by),
             ("stop", self.stop),
             ("overdub_on", self.toggle_overdub),
@@ -44,12 +45,12 @@ class GlobalControl(Control):
             ("macro_6", lambda value, mode, status: self.set_device_param(6, value)),
             ("macro_7", lambda value, mode, status: self.set_device_param(7, value)),
             ("macro_8", lambda value, mode, status: self.set_device_param(8, value)),
-            ("select_instrument", self.select_instrument),
-            ("toggle_lock", self.toggle_lock),
 
             # Clip
             ("delete_clip", self.delete_clip),
             ("duplicate_clip", self.duplicate_clip),
+            ("double_clip", self.double_clip),
+            ("create_clip", self.create_clip),
 
             # Track
             ("volume", self.set_volume),
@@ -70,11 +71,14 @@ class GlobalControl(Control):
         self.song.scrub_by(value)
 
     @ignore_cc_zero
-    def play_pause(self, value, mode, status):
-        if self.song.is_playing:
-            self.song.stop_playing()
-        else:
-            self.song.continue_playing()
+    def play(self, value, mode, status):
+        self.song.continue_playing()
+        self.c_instance.send_midi((144, mappings["play"].key, 1))
+
+    @ignore_cc_zero
+    def pause(self, value, mode, status):
+        self.song.stop_playing()
+        self.c_instance.send_midi((128, mappings["play"].key, 0))
 
     @ignore_cc_zero
     def stop(self, value, mode, status):
@@ -152,6 +156,18 @@ class GlobalControl(Control):
             track = self.song.view.selected_track
             next = track.duplicate_clip_slot(list(track.clip_slots).index(slot))
             self.song.view.highlighted_clip_slot = track.clip_slots[next]
+
+    def double_clip(self, value, mode, status):
+        slot = self.song.view.highlighted_clip_slot
+        track = self.song.view.selected_track
+        if slot.has_clip:
+            slot_index = track.playing_slot_index
+            if slot_index >= 0 and track.clip_slots[slot_index].has_clip:
+                track.clip_slots[slot_index].clip.duplicate_loop()
+
+    def create_clip(self, value, mode, status):
+        slot = self.song.view.highlighted_clip_slot
+        slot.create_clip(4)
 
     @ignore_cc_zero
     def toggle_arm(self, value, mode, status):

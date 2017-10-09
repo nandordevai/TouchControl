@@ -34,12 +34,16 @@ Please send any feedback to mail@devainandor.com. All comments and ideas are wel
 ## TODO
 
 - [x] increase sensitivity for track/scene scroll
-- [ ] device lock
+- [x] use toggle mode for mute/solo/etc. pads
 - [ ] printable overlays
-- [ ] ~~use toggle mode for mute/solo/etc. pads~~
+- [ ] ~~device lock~~
 
-## _Framework documentation
+## Documentations
 
 <http://julienbayle.net/AbletonLiveRemoteScripts_Docs/_Framework/_Framework-module.html>
 
 [Live API Version 9.6.0](http://julienbayle.net/PythonLiveAPI_documentation/Live9.6.xml)
+
+<https://forum.ableton.com/viewtopic.php?f=1&t=200513>
+
+<https://github.com/gluon/AbletonLive9_RemoteScripts>
