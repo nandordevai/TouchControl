@@ -72,17 +72,19 @@ class GlobalControl(Control):
 
     @ignore_cc_zero
     def play(self, value, mode, status):
-        self.song.continue_playing()
-        self.c_instance.send_midi((144, mappings["play"].key, 1))
+        if self.song.current_song_time == 0:
+            self.song.start_playing()
+        else:
+            self.song.continue_playing()
 
     @ignore_cc_zero
     def pause(self, value, mode, status):
         self.song.stop_playing()
-        self.c_instance.send_midi((128, mappings["play"].key, 0))
 
     @ignore_cc_zero
     def stop(self, value, mode, status):
         self.song.stop_playing()
+        self.c_instance.send_midi((128, mappings["play"].key, 0))
 
     @ignore_cc_zero
     def toggle_overdub(self, value, mode, status):
@@ -104,6 +106,7 @@ class GlobalControl(Control):
         self.song.session_automation_record = not self.song.session_automation_record
 
     def scroll_tracks(self, value, *args):
+        # change track on every 5th value change for ease of use
         # if the knob is turned to the other side than before, reset:
         if math.copysign(1, self.track_buffer) != math.copysign(1, value):
             self.track_buffer = 0
@@ -126,11 +129,13 @@ class GlobalControl(Control):
         return tracks[new_index]
 
     def scroll_scenes(self, value, *args):
-        if self.scene_buffer == 5:
+        # see scroll_tracks()
+        if math.copysign(1, self.scene_buffer) != math.copysign(1, value):
+            self.scene_buffer = 0
+        self.scene_buffer += value
+        if abs(self.scene_buffer) == 5:
             self.song.view.selected_scene = self.get_scene_by_delta(value)
             self.scene_buffer = 0
-        else:
-            self.scene_buffer += 1
 
     def get_scene_by_delta(self, delta):
         scene = self.song.view.selected_scene
@@ -138,12 +143,6 @@ class GlobalControl(Control):
         current_index = list(scenes).index(scene)
         new_index = max(0, min(current_index + delta, len(scenes) - 1))
         return scenes[new_index]
-
-    def select_instrument(self, value, mode, status):
-        self.song.view.selected_track.view.select_instrument()
-
-    def toggle_lock(self, value, mode, status):
-        self.c_instance.toggle_lock()
 
     def delete_clip(self, value, mode, status):
         slot = self.song.view.highlighted_clip_slot
