@@ -71,3 +71,6 @@ class MPD218:
 
     def unlock_from_device(self, *args):
         pass
+
+    def restore_bank(self, *args):
+        pass

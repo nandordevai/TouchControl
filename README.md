@@ -48,3 +48,7 @@ Please send any feedback to mail@devainandor.com. All comments and ideas are wel
 <https://forum.ableton.com/viewtopic.php?f=1&t=200513>
 
 <https://github.com/gluon/AbletonLive9_RemoteScripts>
+
+<http://svn2.assembla.com/svn/live-api/trunk/docs/Ableton%20Live%20API/index.html>
+
+<https://app.assembla.com/spaces/live-api/wiki/How_to_Manipulate_Views>

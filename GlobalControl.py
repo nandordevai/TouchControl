@@ -165,6 +165,7 @@ class GlobalControl(Control):
                 track.clip_slots[slot_index].clip.duplicate_loop()
 
     def create_clip(self, value, mode, status):
+        # TODO: show message if not a MIDI track
         slot = self.song.view.highlighted_clip_slot
         slot.create_clip(4)
 
@@ -256,11 +257,17 @@ class GlobalControl(Control):
                 vel = 0
             return msg, vel
 
-        msg, vel = _build_midi_msg(self.song.view.selected_track.arm)
+        track = self.song.view.selected_track
+        
+        # TODO: check if send or master track
+        msg, vel = _build_midi_msg(track.arm)
         self.c_instance.send_midi((msg, mappings["arm"].key, vel))
 
-        msg, vel = _build_midi_msg(self.song.view.selected_track.mute)
+        msg, vel = _build_midi_msg(track.mute)
         self.c_instance.send_midi((msg, mappings["mute"].key, vel))
 
-        msg, vel = _build_midi_msg(self.song.view.selected_track.solo)
+        msg, vel = _build_midi_msg(track.solo)
         self.c_instance.send_midi((msg, mappings["solo"].key, vel))
+
+        if len(track.devices) > 0:
+            self.song.view.select_device(track.devices[0])
