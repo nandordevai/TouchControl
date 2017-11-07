@@ -36,6 +36,7 @@ Please send any feedback to mail@devainandor.com. All comments and ideas are wel
 - [x] increase sensitivity for track/scene scroll
 - [x] use toggle mode for mute/solo/etc. pads
 - [ ] stop track in performance mode
+- [ ] activate play button when song started in Live
 - [ ] printable overlays
 - [ ] ~~device lock~~
 
