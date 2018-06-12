@@ -2,7 +2,7 @@
 
 Based on [Selected Track Control for Ableton Live](http://stc.wiffbi.com/)
 
-Note: this is currently a work in progress.
+Note: I don't have the controller anymore so I won't add features/fix bugs. Feel free to fork and improve.
 
 ## Features
 
@@ -26,10 +26,6 @@ Load the preset files (MPD218 STC Studio.mpd218 and MPD218 STC Performance.mpd21
 Copy the folder to Ableton Live’s MIDI remote scripts folder. (On macOS it is /Applications/Ableton Live 9 Standard.app/Contents/App-Resources/MIDI Remote Scripts.) Start Ableton Live, open preferences and go to "MIDI Sync" panel. Select 'MPD218 TotalControl' as control surface and configure the MIDI ports accordingly.
 
 The mappings use MIDI channel 1. If you want to use your controller in the default mode (eg. for Drum Racks) then create a preset with another channel.
-
-## Feedback
-
-Please send any feedback to mail@devainandor.com. All comments and ideas are welcome, however I cannot guarantee that I can help you with installation and usage problems. Bugs will be fixed as time permits. New features may be added.
 
 ## TODO
 
